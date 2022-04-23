@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '202/services/service_learn_view.dart';
 import '202/services/service_post_learn_view.dart';
 
 void main() {
@@ -21,6 +22,6 @@ class MyApp extends StatelessWidget {
               color: Colors.grey[850],
             ),
             listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.zero)),
-        home: const ServicePostLearn());
+        home: const ServiceLearn());
   }
 }

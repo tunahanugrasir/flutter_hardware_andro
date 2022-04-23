@@ -1,29 +1,100 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'comment_model.dart';
 import 'post_model.dart';
 
-class PostService {
+abstract class IPostService {
+  Future<bool> addItemToService(PostModel postModel);
+  Future<bool> putItemToService(PostModel postModel, int id);
+  Future<bool> deleteItemToService(PostModel postModel, int id);
+  Future<List<PostModel>?> fetchPostItemsAdvance();
+  Future<List<CommentModel>?> fetchRelatedCommentsWithPostId(int postId);
+}
+
+class PostService implements IPostService {
   final Dio _dio;
 
   PostService() : _dio = Dio(BaseOptions(baseUrl: 'https://jsonplaceholder.typicode.com/'));
 
+  @override
   Future<bool> addItemToService(PostModel postModel) async {
-    final response = await _dio.post('posts', data: postModel);
-    return response.statusCode == HttpStatus.created;
+    try {
+      final response = await _dio.post('posts', data: postModel);
+      return response.statusCode == HttpStatus.created;
+    } on DioError catch (error) {
+      _ShowDebug.showDioError(error);
+      return false;
+    }
   }
 
+  @override
+  Future<bool> putItemToService(PostModel postModel, int id) async {
+    try {
+      final response = await _dio.delete('${_PostServicePaths.posts.name}/$id', data: postModel);
+      return response.statusCode == HttpStatus.ok;
+    } on DioError catch (error) {
+      _ShowDebug.showDioError(error);
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> deleteItemToService(PostModel postModel, int id) async {
+    try {
+      final response = await _dio.put('${_PostServicePaths.posts.name}/$id', data: postModel);
+      return response.statusCode == HttpStatus.ok;
+    } on DioError catch (error) {
+      _ShowDebug.showDioError(error);
+      return false;
+    }
+  }
+
+  @override
   Future<List<PostModel>?> fetchPostItemsAdvance() async {
-    final response = await _dio.get(_PostServicePaths.posts.name );
-    if (response.statusCode == HttpStatus.ok) {
-      final _datas = response.data;
-      if (_datas is List) {
-        return _datas.map((e) => PostModel.fromJson(e)).toList();
+    try {
+      final response = await _dio.get(_PostServicePaths.posts.name);
+
+      if (response.statusCode == HttpStatus.ok) {
+        final _datas = response.data;
+
+        if (_datas is List) {
+          return _datas.map((e) => PostModel.fromJson(e)).toList();
+        }
       }
-    } else {
-      return null;
+    } on DioError catch (error) {
+      _ShowDebug.showDioError(error);
+    }
+    return null;
+  }
+
+  @override
+  Future<List<CommentModel>?> fetchRelatedCommentsWithPostId(int postId) async {
+    try {
+      final response =
+          await _dio.get(_PostServicePaths.comments.name, queryParameters: {_PostQueryPaths.postId.name: postId});
+
+      if (response.statusCode == HttpStatus.ok) {
+        final _datas = response.data;
+
+        if (_datas is List) {
+          return _datas.map((e) => CommentModel.fromJson(e)).toList();
+        }
+      }
+    } on DioError catch (error) {
+      _ShowDebug.showDioError(error);
     }
     return null;
   }
 }
 
 enum _PostServicePaths { posts, comments }
+enum _PostQueryPaths { postId }
+
+class _ShowDebug {
+  static void showDioError(DioError dioError) {
+    if (kDebugMode) {
+      print(dioError);
+    }
+  }
+}

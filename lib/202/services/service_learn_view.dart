@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hardware_andro/202/services/post_model.dart';
 import 'package:flutter_hardware_andro/202/services/post_service.dart';
 
+import 'comment_learn_view.dart';
+
 class ServiceLearn extends StatefulWidget {
   const ServiceLearn({Key? key}) : super(key: key);
 
@@ -15,7 +17,7 @@ class ServiceLearn extends StatefulWidget {
 class _ServiceLearnState extends State<ServiceLearn> {
   List<PostModel>? _items;
   bool _isLoading = false;
-  late final PostService _postService;
+  late final IPostService _postService;
   late final Dio _dio;
   final _baseUrl = 'https://jsonplaceholder.typicode.com/';
 //! initsTate içinde await olamaz...
@@ -50,7 +52,7 @@ class _ServiceLearnState extends State<ServiceLearn> {
 
   Future<void> fetchPostItemsAdvance() async {
     _changeLoading();
-    _items =await _postService.fetchPostItemsAdvance();
+    _items = await _postService.fetchPostItemsAdvance();
     _changeLoading();
   }
 
@@ -60,12 +62,14 @@ class _ServiceLearnState extends State<ServiceLearn> {
       appBar: AppBar(
         actions: [_isLoading ? const CircularProgressIndicator.adaptive() : const SizedBox.shrink()],
       ),
-      body: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemCount: _items?.length ?? 0,
-          itemBuilder: ((context, index) {
-            return _PostsCard(model: _items?[index]);
-          })),
+      body: _items == null
+          ? const Placeholder()
+          : ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              itemCount: _items?.length ?? 0,
+              itemBuilder: ((context, index) {
+                return _PostsCard(model: _items?[index]);
+              })),
     );
   }
 }
@@ -85,6 +89,9 @@ class _PostsCard extends StatelessWidget {
       elevation: 10,
       margin: const EdgeInsets.all(10),
       child: ListTile(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CommentsLearnView(postId: _model?.id)));
+        },
         title: Text(_model?.title ?? ''),
         subtitle: Text(_model?.body ?? ''),
       ),
