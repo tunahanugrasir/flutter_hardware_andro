@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '202/services/service_learn_view.dart';
-import '202/services/service_post_learn_view.dart';
+import 'demos/password_text_field_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData.dark().copyWith(
+        theme: ThemeData.light().copyWith(
             appBarTheme: const AppBarTheme(elevation: 0, backgroundColor: Colors.transparent),
             progressIndicatorTheme: const ProgressIndicatorThemeData(color: Colors.amber),
             bottomAppBarTheme: BottomAppBarTheme(
@@ -22,6 +21,6 @@ class MyApp extends StatelessWidget {
               color: Colors.grey[850],
             ),
             listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.zero)),
-        home: const ServiceLearn());
+        home: const PasswordTextFieldViewLearn());
   }
 }

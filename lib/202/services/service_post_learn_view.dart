@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hardware_andro/202/services/post_model.dart';
@@ -17,12 +16,12 @@ class _ServicePostLearnState extends State<ServicePostLearn> {
   bool _isLoading = false;
   late final Dio _dio;
   final _baseUrl = 'https://jsonplaceholder.typicode.com/';
-  late final PostService _postService;
+  // ignore: unused_field
+  late final IPostService _postService;
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
   final TextEditingController _userIdController = TextEditingController();
 
-//! initsTate içinde await olamaz...
   @override
   void initState() {
     super.initState();

@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hardware_andro/202/services/post_model.dart';
 import 'package:flutter_hardware_andro/202/services/post_service.dart';
@@ -18,14 +16,11 @@ class _ServiceLearnState extends State<ServiceLearn> {
   List<PostModel>? _items;
   bool _isLoading = false;
   late final IPostService _postService;
-  late final Dio _dio;
-  final _baseUrl = 'https://jsonplaceholder.typicode.com/';
+
 //! initsTate içinde await olamaz...
   @override
   void initState() {
     super.initState();
-    _dio = Dio(BaseOptions(baseUrl: _baseUrl));
-
     _postService = PostService();
     fetchPostItems();
   }
@@ -37,20 +32,6 @@ class _ServiceLearnState extends State<ServiceLearn> {
   }
 
   Future<void> fetchPostItems() async {
-    _changeLoading();
-    final response = await Dio().get('https://jsonplaceholder.typicode.com/posts');
-    if (response.statusCode == HttpStatus.ok) {
-      final _datas = response.data;
-      if (_datas is List) {
-        setState(() {
-          _items = _datas.map((e) => PostModel.fromJson(e)).toList();
-        });
-      }
-    }
-    _changeLoading();
-  }
-
-  Future<void> fetchPostItemsAdvance() async {
     _changeLoading();
     _items = await _postService.fetchPostItemsAdvance();
     _changeLoading();

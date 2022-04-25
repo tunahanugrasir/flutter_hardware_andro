@@ -7,7 +7,7 @@ import 'post_model.dart';
 abstract class IPostService {
   Future<bool> addItemToService(PostModel postModel);
   Future<bool> putItemToService(PostModel postModel, int id);
-  Future<bool> deleteItemToService(PostModel postModel, int id);
+  Future<bool> deleteItemInService(PostModel postModel, int id);
   Future<List<PostModel>?> fetchPostItemsAdvance();
   Future<List<CommentModel>?> fetchRelatedCommentsWithPostId(int postId);
 }
@@ -20,7 +20,7 @@ class PostService implements IPostService {
   @override
   Future<bool> addItemToService(PostModel postModel) async {
     try {
-      final response = await _dio.post('posts', data: postModel);
+      final response = await _dio.post(_PostServicePaths.posts.name, data: postModel);
       return response.statusCode == HttpStatus.created;
     } on DioError catch (error) {
       _ShowDebug.showDioError(error);
@@ -31,7 +31,7 @@ class PostService implements IPostService {
   @override
   Future<bool> putItemToService(PostModel postModel, int id) async {
     try {
-      final response = await _dio.delete('${_PostServicePaths.posts.name}/$id', data: postModel);
+      final response = await _dio.put('${_PostServicePaths.posts.name}/$id', data: postModel);
       return response.statusCode == HttpStatus.ok;
     } on DioError catch (error) {
       _ShowDebug.showDioError(error);
@@ -40,9 +40,9 @@ class PostService implements IPostService {
   }
 
   @override
-  Future<bool> deleteItemToService(PostModel postModel, int id) async {
+  Future<bool> deleteItemInService(PostModel postModel, int id) async {
     try {
-      final response = await _dio.put('${_PostServicePaths.posts.name}/$id', data: postModel);
+      final response = await _dio.delete('${_PostServicePaths.posts.name}/$id', data: postModel);
       return response.statusCode == HttpStatus.ok;
     } on DioError catch (error) {
       _ShowDebug.showDioError(error);
