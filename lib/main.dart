@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '202/cache/shared_cache_learn.dart';
+import '202/alert_learn.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
               color: Colors.grey[850],
             ),
             listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.zero)),
-        home: const SharedCacheLearn());
+        home: const AlertLearn());
   }
 }
