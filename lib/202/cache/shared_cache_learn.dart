@@ -22,9 +22,9 @@ class _SharedCacheLearnState extends LoadingStateful<SharedCacheLearn> {
   }
 
   Future<void> _initialized() async {
-    _changeLoading();
+    changeLoading();
     await _manager.init();
-    _changeLoading();
+    changeLoading();
     getDefaultValues();
   }
 
@@ -94,9 +94,9 @@ class _SharedCacheLearnState extends LoadingStateful<SharedCacheLearn> {
   FloatingActionButton floatingSaveButton() {
     return FloatingActionButton(
         onPressed: (() async {
-          _changeLoading();
+          changeLoading();
           await _manager.saveString(SharedKeys.counter, _currentValue.toString());
-          _changeLoading();
+          changeLoading();
         }),
         child: const Icon(Icons.add));
   }
@@ -104,9 +104,9 @@ class _SharedCacheLearnState extends LoadingStateful<SharedCacheLearn> {
   FloatingActionButton floatingRemoveButton() {
     return FloatingActionButton(
         onPressed: (() async {
-          _changeLoading();
+          changeLoading();
           _manager.removeItem(SharedKeys.counter);
-          _changeLoading();
+          changeLoading();
           _currentValue = 0;
         }),
         child: const Icon(Icons.remove));
@@ -136,7 +136,7 @@ class UserItems {
 abstract class LoadingStateful<T extends StatefulWidget> extends State<T> {
   bool isLoading = false;
 
-  void _changeLoading() {
+  void changeLoading() {
     setState(() {
       isLoading = !isLoading;
     });
