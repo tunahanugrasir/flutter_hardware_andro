@@ -1,8 +1,19 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'demos/demo_json/view/demo_view.dart';
+import 'package:flutter_hardware_andro/product/extension/global/resource_context.dart';
+import 'package:flutter_hardware_andro/product/extension/global/theme_notifier.dart';
+import 'package:provider/provider.dart';
+
+import '303/lottie_learn.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(DevicePreview(
+    enabled: true,
+    builder: (context) => MultiProvider(providers: [
+      Provider(create: (_) => ResourceContext()),
+      ChangeNotifierProvider(create: (context) => ThemeNotifier()),
+    ], child: const MyApp()),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -13,14 +24,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        theme: ThemeData.light().copyWith(
-            appBarTheme: const AppBarTheme(elevation: 0, backgroundColor: Color.fromARGB(255, 86, 7, 234)),
-            progressIndicatorTheme: const ProgressIndicatorThemeData(color: Colors.amber),
-            bottomAppBarTheme: BottomAppBarTheme(
-              shape: const CircularNotchedRectangle(),
-              color: Colors.grey[850],
-            ),
-            listTileTheme: const ListTileThemeData(contentPadding: EdgeInsets.zero)),
-        home: const DemoView());
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
+        theme: context.watch<ThemeNotifier>().currentTheme,
+        home: const LottieLearn());
   }
 }

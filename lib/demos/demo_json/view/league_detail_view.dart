@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../view_model/league_detail_view_model.dart';
 
 class LeagueDetailView extends StatefulWidget {
