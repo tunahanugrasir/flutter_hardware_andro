@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hardware_andro/product/extension/global/resource_context.dart';
 import 'package:flutter_hardware_andro/product/extension/global/theme_notifier.dart';
 import 'package:provider/provider.dart';
-
 import '303/lottie_learn.dart';
 
 void main() {
