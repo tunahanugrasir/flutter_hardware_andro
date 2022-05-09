@@ -4,7 +4,7 @@ import 'package:flutter_hardware_andro/product/extension/global/resource_context
 import 'package:flutter_hardware_andro/product/extension/global/theme_notifier.dart';
 import 'package:provider/provider.dart';
 
-import '303/package/kartal/kartal_view.dart';
+import '404/bloc/feature/login/view/login_view.dart';
 
 void main() {
   runApp(DevicePreview(
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: context.watch<ThemeNotifier>().currentTheme,
       // routes: NavigatorRoutes().items,
       // navigatorKey: NavigatorManager.instance.navigatorGlobalKey,
-      home: const KartalView(),
+      home: const LoginView(),
     );
   }
 }

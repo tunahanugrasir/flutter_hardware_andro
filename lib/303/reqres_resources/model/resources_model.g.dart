@@ -26,7 +26,6 @@ Data _$DataFromJson(Map<String, dynamic> json) => Data(
       pantoneValue: json['pantoneValue'] as String?,
     );
 
-// ignore: unused_element
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
