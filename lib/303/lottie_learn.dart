@@ -45,7 +45,7 @@ class _LottieLoading extends StatelessWidget {
   const _LottieLoading({
     Key? key,
   }) : super(key: key);
-  final _lottieData = 'https://assets2.lottiefiles.com/packages/lf20_ydo1amjm.json';
+  // final _lottieData = 'https://assets2.lottiefiles.com/packages/lf20_ydo1amjm.json';
   final _lottieCatData = 'https://assets1.lottiefiles.com/packages/lf20_Zz37yH.json';
   @override
   Widget build(BuildContext context) {

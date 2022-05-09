@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hardware_andro/product/extension/global/resource_context.dart';
 import 'package:flutter_hardware_andro/product/extension/global/theme_notifier.dart';
 import 'package:provider/provider.dart';
-import '303/lottie_learn.dart';
+
+import '303/package/kartal/kartal_view.dart';
 
 void main() {
   runApp(DevicePreview(
@@ -21,12 +22,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        theme: context.watch<ThemeNotifier>().currentTheme,
-        home: const LottieLearn());
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
+      theme: context.watch<ThemeNotifier>().currentTheme,
+      // routes: NavigatorRoutes().items,
+      // navigatorKey: NavigatorManager.instance.navigatorGlobalKey,
+      home: const KartalView(),
+    );
   }
 }
